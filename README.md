@@ -125,6 +125,26 @@ pytest -q
 ./scripts/build_dist.sh
 ```
 
+安装到其他 Hermes 机器：
+
+```bash
+git clone https://github.com/tianwaifeixian285/china-invoice-parser.git
+cd china-invoice-parser
+./scripts/install_hermes_skill.sh
+```
+
+启用 OCR 的 Hermes 安装：
+
+```bash
+./scripts/install_hermes_skill.sh --with-ocr
+```
+
+安装后校验：
+
+```bash
+./scripts/verify_hermes_install.sh
+```
+
 ## 分支策略
 
 - `main`：始终保持可发布状态
@@ -156,6 +176,25 @@ pytest -q
 4. 推送 `main` 和 tag
 
 发布细节参见：[PUBLISHING.md](/Users/mac/2026/研究/china-invoice-parser/PUBLISHING.md)
+
+## 部署到 Hermes
+
+推荐在其他 Hermes 机器上按以下方式安装：
+
+```bash
+git clone https://github.com/tianwaifeixian285/china-invoice-parser.git
+cd china-invoice-parser
+./scripts/install_hermes_skill.sh
+```
+
+脚本会：
+
+- 克隆或更新仓库到 `~/.hermes/skills/china-invoice-parser`
+- 创建独立虚拟环境
+- 安装 `pdf + sign` 依赖
+- 可选安装 OCR 依赖
+
+如果目标机器要启用 OCR，还需要安装系统级 `tesseract`。
 
 ## 下一步计划
 
