@@ -31,11 +31,18 @@ pre-commit install
 - 结果 schema 格式有效
 - 脱敏样本可重复生成
 - 全量测试通过
+- 构建产物可成功生成并安装
 
 ## 自动格式化
 
 ```bash
 ./scripts/format.sh
+```
+
+## 构建产物
+
+```bash
+./scripts/build_dist.sh
 ```
 
 ## 提交建议

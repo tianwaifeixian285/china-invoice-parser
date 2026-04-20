@@ -3,6 +3,7 @@
 [![CI](https://github.com/tianwaifeixian285/china-invoice-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/tianwaifeixian285/china-invoice-parser/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/tag/tianwaifeixian285/china-invoice-parser?label=release)](https://github.com/tianwaifeixian285/china-invoice-parser/releases)
 [![License](https://img.shields.io/github/license/tianwaifeixian285/china-invoice-parser)](https://github.com/tianwaifeixian285/china-invoice-parser/blob/main/LICENSE)
+[![Python](https://img.shields.io/pypi/pyversions/china-invoice-parser)](https://pypi.org/project/china-invoice-parser/)
 
 China Invoice Parser 是一个以 Python 为主栈的技能项目，用于解析中国发票文件，支持从 PDF 和 OFD 中提取字段，并在具备条件时验证数字签名。
 
@@ -109,6 +110,12 @@ pytest -q
 ./scripts/format.sh
 ```
 
+构建发布产物：
+
+```bash
+./scripts/build_dist.sh
+```
+
 ## 分支策略
 
 - `main`：始终保持可发布状态
@@ -138,6 +145,8 @@ pytest -q
 2. 合并到 `main`
 3. 在 `main` 上执行 `./scripts/release.sh 0.1.0`
 4. 推送 `main` 和 tag
+
+发布细节参见：[PUBLISHING.md](/Users/mac/2026/研究/china-invoice-parser/PUBLISHING.md)
 
 ## 下一步计划
 
