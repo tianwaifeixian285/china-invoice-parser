@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全问题报告
+    url: https://github.com/tianwaifeixian285/china-invoice-parser/security/policy
+    about: 安全问题请不要公开提交 Issue，请按 SECURITY.md 私下联系
+

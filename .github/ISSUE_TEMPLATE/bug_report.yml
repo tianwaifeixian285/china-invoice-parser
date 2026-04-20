@@ -1,0 +1,56 @@
+name: Bug Report
+description: 报告缺陷、回归或错误解析结果
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交前请确认：
+        - 不包含真实发票、真实税号、真实证书
+        - 能提供可复现步骤或脱敏样本
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题描述
+      description: 简要描述问题表现
+      placeholder: 例如：某类 PDF 发票的购买方名称被错误识别
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: 请写清输入类型、运行命令和实际输出
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+  - type: dropdown
+    id: file_type
+    attributes:
+      label: 文件类型
+      options:
+        - PDF
+        - OFD
+        - XML
+        - Text
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境信息
+      description: Python 版本、系统版本、依赖版本等
+  - type: textarea
+    id: sanitized_sample
+    attributes:
+      label: 脱敏样本或补充信息
+      description: 如有，请附脱敏样本或粘贴关键文本片段
+

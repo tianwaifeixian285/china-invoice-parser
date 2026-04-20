@@ -1,0 +1,31 @@
+name: Feature Request
+description: 提出新能力、票种支持或平台集成需求
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 需求背景
+      description: 想解决什么问题
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 希望新增什么能力
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 适用范围
+      description: 票种、格式、平台或业务流程范围
+  - type: textarea
+    id: examples
+    attributes:
+      label: 样例
+      description: 可提供脱敏样本、字段清单或目标输出示例
+
