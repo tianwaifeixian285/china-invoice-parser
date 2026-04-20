@@ -17,7 +17,7 @@ dependencies = []
 [project.optional-dependencies]
 pdf = ["pypdf>=4.2.0"]
 sign = ["pyHanko>=0.24.0"]
-dev = ["pytest>=8.0.0"]
+dev = ["jsonschema>=4.23.0", "pytest>=8.0.0"]
 
 [project.scripts]
 china-invoice-parser = "china_invoice_parser.cli:main"
@@ -27,4 +27,3 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

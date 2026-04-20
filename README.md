@@ -8,6 +8,7 @@ China Invoice Parser 是一个以 Python 为主栈的技能项目，用于解析
 
 - Python CLI 入口
 - 结构化 JSON 输出协议
+- `specs/` 规格目录
 - PDF 文本提取兜底实现
 - OFD 文本提取兜底实现
 - 基于 `pyHanko` 的 PDF 验签实现
@@ -50,9 +51,17 @@ china-invoice-parser/
 cd /Users/mac/2026/研究/china-invoice-parser
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e .
+pip install -e '.[pdf,sign,dev]'
 python3 scripts/parse_invoice.py /绝对路径/发票.pdf --pretty
 ```
+
+## 规格目录
+
+`0.1.0` 起，项目采用更明确的 SDD + TDD 结构：
+
+- [specs/README.md](/Users/mac/2026/研究/china-invoice-parser/specs/README.md)：版本范围、模块边界、验收标准
+- [specs/result-schema-v1.json](/Users/mac/2026/研究/china-invoice-parser/specs/result-schema-v1.json)：结果 JSON schema
+- [specs/release-0.1.0.md](/Users/mac/2026/研究/china-invoice-parser/specs/release-0.1.0.md)：`0.1.0` 发布约束与清单
 
 ## 当前能力
 
@@ -84,6 +93,12 @@ source .venv/bin/activate
 pytest -q
 ```
 
+检查规格与测试：
+
+```bash
+./scripts/check.sh
+```
+
 ## 分支策略
 
 - `main`：始终保持可发布状态
@@ -106,6 +121,13 @@ pytest -q
 ./scripts/check.sh
 ./scripts/release.sh 0.1.0
 ```
+
+建议发布顺序：
+
+1. 在 `feat/*` 分支完成功能与测试
+2. 合并到 `main`
+3. 在 `main` 上执行 `./scripts/release.sh 0.1.0`
+4. 推送 `main` 和 tag
 
 ## 下一步计划
 

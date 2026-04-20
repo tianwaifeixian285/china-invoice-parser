@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://china-invoice-parser/specs/result-schema-v1.json",
+  "title": "China Invoice Parser Result Schema v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "engine",
+    "file_type",
+    "invoice",
+    "signature",
+    "warnings",
+    "raw_text",
+    "summary"
+  ],
+  "properties": {
+    "engine": {
+      "type": "string",
+      "enum": ["python"]
+    },
+    "file_type": {
+      "type": "string",
+      "enum": ["pdf", "ofd", "text", "xml", "unknown"]
+    },
+    "invoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invoice_type",
+        "invoice_code",
+        "invoice_number",
+        "issue_date",
+        "check_code",
+        "buyer_name",
+        "buyer_tax_id",
+        "seller_name",
+        "seller_tax_id",
+        "amount_without_tax",
+        "tax_amount",
+        "amount_with_tax",
+        "currency",
+        "items"
+      ],
+      "properties": {
+        "invoice_type": {
+          "type": ["string", "null"]
+        },
+        "invoice_code": {
+          "type": ["string", "null"]
+        },
+        "invoice_number": {
+          "type": ["string", "null"]
+        },
+        "issue_date": {
+          "type": ["string", "null"]
+        },
+        "check_code": {
+          "type": ["string", "null"]
+        },
+        "buyer_name": {
+          "type": ["string", "null"]
+        },
+        "buyer_tax_id": {
+          "type": ["string", "null"]
+        },
+        "seller_name": {
+          "type": ["string", "null"]
+        },
+        "seller_tax_id": {
+          "type": ["string", "null"]
+        },
+        "amount_without_tax": {
+          "type": ["number", "null"]
+        },
+        "tax_amount": {
+          "type": ["number", "null"]
+        },
+        "amount_with_tax": {
+          "type": ["number", "null"]
+        },
+        "currency": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "model",
+              "unit",
+              "count",
+              "price",
+              "amount",
+              "tax_rate",
+              "tax_amount"
+            ],
+            "properties": {
+              "name": {
+                "type": ["string", "null"]
+              },
+              "model": {
+                "type": ["string", "null"]
+              },
+              "unit": {
+                "type": ["string", "null"]
+              },
+              "count": {
+                "type": ["number", "null"]
+              },
+              "price": {
+                "type": ["number", "null"]
+              },
+              "amount": {
+                "type": ["number", "null"]
+              },
+              "tax_rate": {
+                "type": ["number", "null"]
+              },
+              "tax_amount": {
+                "type": ["number", "null"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "has_signature",
+        "signature_format",
+        "verification_status",
+        "signer",
+        "sign_time",
+        "cert_subject",
+        "cert_issuer",
+        "reason"
+      ],
+      "properties": {
+        "has_signature": {
+          "type": "boolean"
+        },
+        "signature_format": {
+          "type": ["string", "null"]
+        },
+        "verification_status": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "invalid",
+            "unsigned",
+            "unknown",
+            "verification_error",
+            "unsupported"
+          ]
+        },
+        "signer": {
+          "type": ["string", "null"]
+        },
+        "sign_time": {
+          "type": ["string", "null"]
+        },
+        "cert_subject": {
+          "type": ["string", "null"]
+        },
+        "cert_issuer": {
+          "type": ["string", "null"]
+        },
+        "reason": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "raw_text": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    }
+  }
+}
