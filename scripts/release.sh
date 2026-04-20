@@ -36,7 +36,11 @@ PY
 
 ./scripts/check.sh
 git add pyproject.toml src/china_invoice_parser/__init__.py
-git commit -m "release: v${VERSION}"
+if ! git diff --cached --quiet; then
+  git commit -m "release: v${VERSION}"
+else
+  echo "版本号已是 ${VERSION}，跳过 release 提交，直接基于当前提交打标签。"
+fi
 git tag "v${VERSION}"
 
 echo "已创建提交和标签 v${VERSION}。"

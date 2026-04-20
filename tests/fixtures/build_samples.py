@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from zipfile import ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 
 FIXTURE_ROOT = Path(__file__).resolve().parent
@@ -89,12 +89,17 @@ def _build_cjk_pdf(text: str, destination: Path) -> None:
 
 
 def _build_ofd(destination: Path) -> None:
+    def write_deterministic(archive: ZipFile, name: str, content: str) -> None:
+        info = ZipInfo(filename=name, date_time=(2026, 1, 1, 0, 0, 0))
+        info.compress_type = ZIP_DEFLATED
+        archive.writestr(info, content)
+
     destination.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(destination, "w") as archive:
-        archive.writestr("OFD.xml", "<?xml version='1.0' encoding='UTF-8'?><OFD />")
-        archive.writestr("Doc_0/Document.xml", OFD_DOCUMENT_XML)
-        archive.writestr("Doc_0/Signs/Signatures.xml", OFD_SIGNATURES_XML)
-        archive.writestr("Doc_0/Signs/Sign_0/Signature.xml", OFD_SIGNATURE_XML)
+        write_deterministic(archive, "OFD.xml", "<?xml version='1.0' encoding='UTF-8'?><OFD />")
+        write_deterministic(archive, "Doc_0/Document.xml", OFD_DOCUMENT_XML)
+        write_deterministic(archive, "Doc_0/Signs/Signatures.xml", OFD_SIGNATURES_XML)
+        write_deterministic(archive, "Doc_0/Signs/Sign_0/Signature.xml", OFD_SIGNATURE_XML)
 
 
 def main() -> None:
