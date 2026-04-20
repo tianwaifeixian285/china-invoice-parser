@@ -60,6 +60,13 @@ pip install -e '.[pdf,sign,dev]'
 python3 scripts/parse_invoice.py /绝对路径/发票.pdf --pretty
 ```
 
+启用 OCR 能力：
+
+```bash
+pip install -e '.[pdf,sign,ocr,dev]'
+brew install tesseract
+```
+
 ## 规格目录
 
 `0.1.0` 起，项目采用更明确的 SDD + TDD 结构：
@@ -71,7 +78,9 @@ python3 scripts/parse_invoice.py /绝对路径/发票.pdf --pretty
 ## 当前能力
 
 - `PDF`：若安装 `pypdf`，优先读取 PDF 文本；未安装则返回告警
+- `PDF OCR`：若文本提取质量差，且已安装 OCR 依赖与 `tesseract`，自动尝试 OCR 兜底
 - `OFD`：尽量从 OFD 容器中的 XML/文本描述内容中抽取文本；失败时返回告警
+- `图片发票`：安装 OCR 依赖后可直接识别 `png/jpg/jpeg/webp/tiff/bmp`
 - `PDF 验签`：使用 `pyHanko` 做签名检测和校验；在信任链不足时保守返回 `unknown`
 - `OFD 验签`：已做签名清单、引用文件和基础元数据校验；后续继续增强密码学验签
 - `字段提取`：支持票种、代码、号码、日期、购销双方、税号、金额、税额、价税合计
@@ -152,6 +161,6 @@ pytest -q
 
 1. 按票种和地区继续补强字段模板
 2. 增强 OFD 密码学验签逻辑
-3. 增加图片/OCR 发票兜底
+3. 增强 OCR 对 OFD 转图和复杂版式的支持
 4. 增加目录批量模式
 5. 增加更多脱敏样本和回归测试

@@ -20,7 +20,7 @@
     },
     "file_type": {
       "type": "string",
-      "enum": ["pdf", "ofd", "text", "xml", "unknown"]
+      "enum": ["pdf", "ofd", "image", "text", "xml", "unknown"]
     },
     "invoice": {
       "type": "object",

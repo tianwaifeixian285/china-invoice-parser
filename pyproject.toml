@@ -32,6 +32,10 @@ Issues = "https://github.com/tianwaifeixian285/china-invoice-parser/issues"
 Changelog = "https://github.com/tianwaifeixian285/china-invoice-parser/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
+ocr = [
+  "pillow>=10.4.0",
+  "pytesseract>=0.3.13"
+]
 pdf = ["pypdf>=4.2.0"]
 sign = ["pyHanko>=0.24.0"]
 dev = [

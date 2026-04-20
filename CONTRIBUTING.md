@@ -18,6 +18,13 @@ pip install -e '.[pdf,sign,dev]'
 pre-commit install
 ```
 
+如需开发 OCR：
+
+```bash
+pip install -e '.[ocr]'
+brew install tesseract
+```
+
 ## 本地检查
 
 ```bash

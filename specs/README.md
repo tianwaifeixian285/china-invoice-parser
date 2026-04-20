@@ -26,6 +26,8 @@
 - 批量目录模式
 - 所有地区、所有票种、所有版式的全覆盖
 
+`main` 分支在 `0.1.0` 之后已开始加入 OCR 能力，但尚未形成新的正式版本承诺。
+
 ## 模块边界
 
 - `scripts/parse_invoice.py`
@@ -54,4 +56,3 @@
 3. `scripts/check.sh` 通过
 4. `parse_invoice.py` 对样本输出满足 `result-schema-v1.json`
 5. `pyproject.toml` 与 `src/china_invoice_parser/__init__.py` 的版本一致
-
