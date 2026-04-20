@@ -8,10 +8,16 @@ from .parser import parse_invoice
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Parse Chinese invoice files and emit normalized JSON.")
+    parser = argparse.ArgumentParser(
+        description="Parse Chinese invoice files and emit normalized JSON."
+    )
     parser.add_argument("input", help="Path to a PDF, OFD, XML, or text file.")
     parser.add_argument("--pretty", action="store_true", help="Pretty-print JSON output.")
-    parser.add_argument("--summary-only", action="store_true", help="Print only the short summary line.")
+    parser.add_argument(
+        "--summary-only",
+        action="store_true",
+        help="Print only the short summary line.",
+    )
     return parser
 
 

@@ -18,4 +18,3 @@ def extract_pdf_text(path: Path) -> tuple[str, list[str]]:
     except Exception as exc:
         warnings.append(f"Failed to extract PDF text: {exc}")
         return "", warnings
-

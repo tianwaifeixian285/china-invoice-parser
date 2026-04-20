@@ -4,7 +4,6 @@ from pathlib import Path
 
 from china_invoice_parser.parser import parse_invoice
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 

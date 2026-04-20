@@ -18,4 +18,3 @@ def build_summary(result: ParseResult) -> str:
     if result.warnings:
         parts.append(f"warnings={len(result.warnings)}")
     return ", ".join(parts)
-

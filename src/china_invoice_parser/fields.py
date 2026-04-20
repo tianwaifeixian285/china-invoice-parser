@@ -4,7 +4,6 @@ import re
 
 from .models import InvoiceFields, InvoiceItem
 
-
 INVOICE_TYPE_PATTERNS: tuple[str, ...] = (
     r"(增值税电子专用发票)",
     r"(增值税电子普通发票)",
@@ -17,19 +16,13 @@ INVOICE_TYPE_PATTERNS: tuple[str, ...] = (
 )
 
 FIELD_PATTERNS: dict[str, tuple[str, ...]] = {
-    "invoice_code": (
-        r"(?:发票代码|票据代码)[：:\s]*([0-9]{10,20})",
-    ),
-    "invoice_number": (
-        r"(?:发票号码|票据号码)[：:\s]*([0-9]{6,20})",
-    ),
+    "invoice_code": (r"(?:发票代码|票据代码)[：:\s]*([0-9]{10,20})",),
+    "invoice_number": (r"(?:发票号码|票据号码)[：:\s]*([0-9]{6,20})",),
     "issue_date": (
         r"(?:开票日期|日期)[：:\s]*([0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日)",
         r"(?:开票日期|日期)[：:\s]*([0-9]{4}-[0-9]{2}-[0-9]{2})",
     ),
-    "check_code": (
-        r"(?:校验码)[：:\s]*([0-9]{6,20})",
-    ),
+    "check_code": (r"(?:校验码)[：:\s]*([0-9]{6,20})",),
 }
 
 BUYER_NAME_PATTERNS: tuple[str, ...] = (
@@ -110,11 +103,20 @@ def _split_item_line(line: str) -> list[str]:
 
 def extract_invoice_items(text: str) -> list[InvoiceItem]:
     items: list[InvoiceItem] = []
+    header_keywords = (
+        "项目名称",
+        "规格型号",
+        "税率",
+        "金额合计",
+        "价税合计",
+        "购买方",
+        "销售方",
+    )
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if not line:
             continue
-        if any(keyword in line for keyword in ("项目名称", "规格型号", "税率", "金额合计", "价税合计", "购买方", "销售方")):
+        if any(keyword in line for keyword in header_keywords):
             continue
         parts = _split_item_line(line)
         if len(parts) < 6:
@@ -141,7 +143,12 @@ def extract_invoice_items(text: str) -> list[InvoiceItem]:
             tax_rate=_parse_tax_rate(tax_rate),
             tax_amount=_parse_float(tax_amount),
         )
-        numeric_fields = [parsed_item.count, parsed_item.price, parsed_item.amount, parsed_item.tax_amount]
+        numeric_fields = [
+            parsed_item.count,
+            parsed_item.price,
+            parsed_item.amount,
+            parsed_item.tax_amount,
+        ]
         if parsed_item.name and any(value is not None for value in numeric_fields):
             items.append(parsed_item)
     return items
@@ -160,7 +167,10 @@ def extract_invoice_fields(text: str) -> InvoiceFields:
     fields.seller_name = _search_any(SELLER_NAME_PATTERNS, normalized)
     fields.seller_tax_id = _search_any(SELLER_TAX_ID_PATTERNS, normalized)
 
-    amount_without_tax = _search(r"(?:^|[\r\n])(?:金额合计|合计)[：:\s]*([0-9]+(?:\.[0-9]+)?)", normalized)
+    amount_without_tax = _search(
+        r"(?:^|[\r\n])(?:金额合计|合计)[：:\s]*([0-9]+(?:\.[0-9]+)?)",
+        normalized,
+    )
     if amount_without_tax is not None:
         fields.amount_without_tax = _parse_float(amount_without_tax)
     else:
@@ -168,7 +178,11 @@ def extract_invoice_fields(text: str) -> InvoiceFields:
 
     fields.tax_amount = _extract_amount("税额", normalized)
     fields.amount_with_tax = _extract_amount("价税合计", normalized)
-    if fields.amount_without_tax is None and fields.amount_with_tax is not None and fields.tax_amount is not None:
+    if (
+        fields.amount_without_tax is None
+        and fields.amount_with_tax is not None
+        and fields.tax_amount is not None
+    ):
         fields.amount_without_tax = round(fields.amount_with_tax - fields.tax_amount, 2)
     fields.items = extract_invoice_items(normalized)
     return fields

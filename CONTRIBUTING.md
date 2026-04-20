@@ -15,6 +15,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e '.[pdf,sign,dev]'
+pre-commit install
 ```
 
 ## 本地检查
@@ -25,9 +26,17 @@ pip install -e '.[pdf,sign,dev]'
 
 当前检查内容包括：
 
+- `ruff` 静态检查
+- `black --check` 格式检查
 - 结果 schema 格式有效
 - 脱敏样本可重复生成
 - 全量测试通过
+
+## 自动格式化
+
+```bash
+./scripts/format.sh
+```
 
 ## 提交建议
 
@@ -54,4 +63,3 @@ pip install -e '.[pdf,sign,dev]'
 ./scripts/check.sh
 ./scripts/release.sh <version>
 ```
-

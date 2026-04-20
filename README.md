@@ -1,5 +1,9 @@
 # China Invoice Parser
 
+[![CI](https://github.com/tianwaifeixian285/china-invoice-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/tianwaifeixian285/china-invoice-parser/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/tag/tianwaifeixian285/china-invoice-parser?label=release)](https://github.com/tianwaifeixian285/china-invoice-parser/releases)
+[![License](https://img.shields.io/github/license/tianwaifeixian285/china-invoice-parser)](https://github.com/tianwaifeixian285/china-invoice-parser/blob/main/LICENSE)
+
 China Invoice Parser 是一个以 Python 为主栈的技能项目，用于解析中国发票文件，支持从 PDF 和 OFD 中提取字段，并在具备条件时验证数字签名。
 
 ## 当前状态
@@ -97,6 +101,12 @@ pytest -q
 
 ```bash
 ./scripts/check.sh
+```
+
+自动格式化：
+
+```bash
+./scripts/format.sh
 ```
 
 ## 分支策略

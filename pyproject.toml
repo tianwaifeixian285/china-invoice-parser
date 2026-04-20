@@ -9,15 +9,39 @@ description = "Python-first parser for Chinese PDF/OFD invoices with field extra
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+keywords = ["invoice", "pdf", "ofd", "china", "parser", "e-invoice"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Office/Business :: Financial",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
 authors = [
   { name = "mac" }
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/tianwaifeixian285/china-invoice-parser"
+Repository = "https://github.com/tianwaifeixian285/china-invoice-parser"
+Issues = "https://github.com/tianwaifeixian285/china-invoice-parser/issues"
+Changelog = "https://github.com/tianwaifeixian285/china-invoice-parser/blob/main/CHANGELOG.md"
+
 [project.optional-dependencies]
 pdf = ["pypdf>=4.2.0"]
 sign = ["pyHanko>=0.24.0"]
-dev = ["jsonschema>=4.23.0", "pytest>=8.0.0"]
+dev = [
+  "black>=24.10.0",
+  "jsonschema>=4.23.0",
+  "pre-commit>=4.0.1",
+  "pytest>=8.0.0",
+  "ruff>=0.7.2"
+]
 
 [project.scripts]
 china-invoice-parser = "china_invoice_parser.cli:main"
@@ -27,3 +51,29 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+extend-exclude = '''
+(
+  /dist/
+  | /build/
+  | /.venv/
+)
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/parse_invoice.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

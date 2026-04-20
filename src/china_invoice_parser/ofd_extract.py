@@ -4,7 +4,6 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
 
-
 TEXT_SUFFIXES = (".xml", ".ofd", ".txt")
 
 

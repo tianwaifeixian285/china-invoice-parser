@@ -6,7 +6,6 @@ from china_invoice_parser.pdf_verify import verify_pdf_signature
 
 from .helpers import sign_pdf_fixture
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 

@@ -9,7 +9,6 @@ from china_invoice_parser.parser import parse_invoice
 
 from .helpers import sign_pdf_fixture
 
-
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = Path(__file__).parent / "fixtures"
 

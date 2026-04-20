@@ -20,19 +20,33 @@ def verify_pdf_signature(path: Path) -> tuple[SignatureStatus, list[str]]:
         from pyhanko_certvalidator import ValidationContext
     except ImportError:
         warnings.append("pyHanko is not installed; PDF signature validation is unavailable.")
-        return SignatureStatus(signature_format="pdf-pkcs7", verification_status="unknown"), warnings
+        return (
+            SignatureStatus(signature_format="pdf-pkcs7", verification_status="unknown"),
+            warnings,
+        )
 
     try:
         with path.open("rb") as handle:
             reader = PdfFileReader(handle)
             embedded = list(reader.embedded_signatures)
             if not embedded:
-                return SignatureStatus(has_signature=False, signature_format="pdf-pkcs7", verification_status="unsigned"), warnings
+                return (
+                    SignatureStatus(
+                        has_signature=False,
+                        signature_format="pdf-pkcs7",
+                        verification_status="unsigned",
+                    ),
+                    warnings,
+                )
 
             sig = embedded[0]
             signer_cert = getattr(sig, "signer_cert", None)
-            cert_subject = _safe_name(getattr(getattr(signer_cert, "subject", None), "human_friendly", None))
-            cert_issuer = _safe_name(getattr(getattr(signer_cert, "issuer", None), "human_friendly", None))
+            cert_subject = _safe_name(
+                getattr(getattr(signer_cert, "subject", None), "human_friendly", None)
+            )
+            cert_issuer = _safe_name(
+                getattr(getattr(signer_cert, "issuer", None), "human_friendly", None)
+            )
             sign_time = getattr(sig, "self_reported_timestamp", None)
             validation_status = validate_pdf_signature(
                 sig,
@@ -61,4 +75,10 @@ def verify_pdf_signature(path: Path) -> tuple[SignatureStatus, list[str]]:
             return status, warnings
     except Exception as exc:
         warnings.append(f"Failed to inspect PDF signatures: {exc}")
-        return SignatureStatus(signature_format="pdf-pkcs7", verification_status="verification_error"), warnings
+        return (
+            SignatureStatus(
+                signature_format="pdf-pkcs7",
+                verification_status="verification_error",
+            ),
+            warnings,
+        )

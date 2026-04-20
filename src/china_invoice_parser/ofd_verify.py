@@ -49,15 +49,31 @@ def verify_ofd_signature(path: Path) -> tuple[SignatureStatus, list[str]]:
     try:
         with ZipFile(path) as archive:
             names = archive.namelist()
-            manifest_candidates = [name for name in names if name.lower().endswith("signatures.xml")]
+            manifest_candidates = [
+                name for name in names if name.lower().endswith("signatures.xml")
+            ]
             if not manifest_candidates:
-                return SignatureStatus(has_signature=False, signature_format="ofd-sign", verification_status="unsigned"), warnings
+                return (
+                    SignatureStatus(
+                        has_signature=False,
+                        signature_format="ofd-sign",
+                        verification_status="unsigned",
+                    ),
+                    warnings,
+                )
 
             manifest_name = manifest_candidates[0]
             refs = _parse_signature_refs(archive.read(manifest_name))
             if not refs:
                 warnings.append("OFD 签名清单存在，但未找到有效的签名引用。")
-                return SignatureStatus(has_signature=True, signature_format="ofd-sign", verification_status="invalid"), warnings
+                return (
+                    SignatureStatus(
+                        has_signature=True,
+                        signature_format="ofd-sign",
+                        verification_status="invalid",
+                    ),
+                    warnings,
+                )
 
             manifest_parent = Path(manifest_name).parent
             available = set(names)
@@ -72,7 +88,14 @@ def verify_ofd_signature(path: Path) -> tuple[SignatureStatus, list[str]]:
                     warnings.append(f"OFD 签名引用缺失: {ref}")
 
             if not resolved_paths:
-                return SignatureStatus(has_signature=True, signature_format="ofd-sign", verification_status="invalid"), warnings
+                return (
+                    SignatureStatus(
+                        has_signature=True,
+                        signature_format="ofd-sign",
+                        verification_status="invalid",
+                    ),
+                    warnings,
+                )
 
             metadata = _parse_signature_metadata(archive.read(resolved_paths[0]))
             return (
@@ -83,10 +106,19 @@ def verify_ofd_signature(path: Path) -> tuple[SignatureStatus, list[str]]:
                     signer=metadata.get("signer"),
                     sign_time=metadata.get("sign_time"),
                     cert_subject=metadata.get("signer"),
-                    reason=f"已完成 OFD 签名结构校验，检测到 {len(resolved_paths)} 个签名文件；密码学验签后续继续增强。",
+                    reason=(
+                        f"已完成 OFD 签名结构校验，检测到 {len(resolved_paths)} 个签名文件；"
+                        "密码学验签后续继续增强。"
+                    ),
                 ),
                 warnings,
             )
     except Exception as exc:
         warnings.append(f"Failed to inspect OFD signatures: {exc}")
-        return SignatureStatus(signature_format="ofd-sign", verification_status="verification_error"), warnings
+        return (
+            SignatureStatus(
+                signature_format="ofd-sign",
+                verification_status="verification_error",
+            ),
+            warnings,
+        )

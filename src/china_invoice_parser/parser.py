@@ -39,7 +39,10 @@ def parse_invoice(path: Path) -> ParseResult:
             has_signature=False,
             signature_format=None,
             verification_status="unsupported",
-            reason="Signature verification is not implemented for plain text or XML input in this version.",
+            reason=(
+                "Signature verification is not implemented for plain text or XML input "
+                "in this version."
+            ),
         )
         sig_warnings = ["Signature verification is not implemented for plain text or XML input."]
         raw_text = path.read_text(encoding="utf-8", errors="ignore")
